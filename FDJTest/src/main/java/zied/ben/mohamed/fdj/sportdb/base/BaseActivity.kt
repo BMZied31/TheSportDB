@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import zied.ben.mohamed.fdj.sportdb.R
+import androidx.viewbinding.ViewBinding
+import zied.ben.mohamed.fdj.sportdb.databinding.LayoutLoadingBinding
 import zied.ben.mohamed.fdj.sportdb.utils.toast
 
-abstract class BaseActivity<VM : BaseViewModel>(private val modelClass: Class<VM>) :
+abstract class BaseActivity<out VM : BaseViewModel, VB : ViewBinding> :
     AppCompatActivity() {
 
     // TODO use viewBinding
@@ -16,15 +17,21 @@ abstract class BaseActivity<VM : BaseViewModel>(private val modelClass: Class<VM
         findViewById(android.R.id.content)
     }
 
-    // TODO use viewBinding
     private val loading: View by lazy {
-        LayoutInflater.from(this).inflate(R.layout.layout_loading, container, false)
+        LayoutLoadingBinding.inflate(LayoutInflater.from(this), container, false).root
     }
 
     protected abstract val viewModel : VM
 
+    protected lateinit var binding: VB
+    protected abstract fun getViewBinding(): VB
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = getViewBinding()
+        setContentView(binding.root)
+
+        // TODO check internet availability
 
         viewModel.loading.observe(this) { loading ->
             showLoading(loading)
