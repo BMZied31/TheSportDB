@@ -44,5 +44,4 @@ abstract class BaseViewModel : ViewModel() {
     protected fun showError(message: String?) {
         _error.postValue(message)
     }
-
 }
