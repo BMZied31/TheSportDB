@@ -7,7 +7,7 @@ import zied.ben.mohamed.fdj.sportdb.base.BaseActivity
 import zied.ben.mohamed.fdj.sportdb.databinding.ActivityMainBinding
 
 @AndroidEntryPoint
-class MainActivity: BaseActivity<MainViewModel, ActivityMainBinding>() {
+class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
 
@@ -17,5 +17,4 @@ class MainActivity: BaseActivity<MainViewModel, ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         binding.tvHello.text = "First Step 1 Complete :)"
     }
-
 }
