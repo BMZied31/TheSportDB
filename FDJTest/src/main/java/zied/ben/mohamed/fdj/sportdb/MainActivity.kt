@@ -18,7 +18,4 @@ class MainActivity: BaseActivity<MainViewModel, ActivityMainBinding>() {
         binding.tvHello.text = "First Step 1 Complete :)"
     }
 
-    override fun canGoBack(): Boolean {
-        return false
-    }
 }
