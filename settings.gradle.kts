@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "SportDB"
-include ':FDJTest'
+include(":FDJTest")
