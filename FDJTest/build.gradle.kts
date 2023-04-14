@@ -7,7 +7,7 @@ plugins {
     id("com.google.dagger.hilt.android")
 }
 val ktlint by configurations.creating
-project.tasks.preBuild.dependsOn("ktlintCheck")
+project.tasks.preBuild.dependsOn("ktlintFormat")
 
 android {
     namespace = "zied.ben.mohamed.fdj.sportdb"
@@ -24,8 +24,11 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             isMinifyEnabled = false
+        }
+        release {
+            isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -64,6 +67,15 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-compiler:2.44")
 
+    // Material
+    implementation("com.google.android.material:material:1.8.0")
+
+    // Timber
+    implementation("com.jakewharton.timber:timber:5.0.1")
+
+    // Mockk
+    testImplementation("io.mockk:mockk:1.9.3")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -81,7 +93,7 @@ val ktlintCheck by tasks.registering(JavaExec::class) {
     args(
         "**/src/**/*.kt",
         "**.kts",
-        "!**/build/**",
+        "!**/build/**"
     )
 }
 
@@ -100,6 +112,6 @@ tasks.register<JavaExec>("ktlintFormat") {
         "-F",
         "**/src/**/*.kt",
         "**.kts",
-        "!**/build/**",
+        "!**/build/**"
     )
 }
