@@ -5,41 +5,41 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 /**
- * [BaseViewModel] The Super class for all viewModels in the application.
- * It regroups all the common behaviors for viewModels.
+ * The base class for all view models in the application. This class provides common
+ * behaviors that are used across view models.
  */
 abstract class BaseViewModel : ViewModel() {
 
-    // Loading liveData responsible for the display of the loading view
+    // LiveData responsible for the display of the loading view
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
-    // Error liveData responsible for the display of errors
+    // LiveData responsible for the display of errors
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
     /**
-     * initiate every viewModel with loading turn off.
+     * Initializes every view model with loading turned off.
      */
     init {
         toggleLoading(isLoading = false)
     }
 
     /**
-     * [toggleLoading] posts the value to [_loading] mutableLiveData
-     * The method is called inside the viewModels that extends [BaseViewModel]
+     * Posts the value to [_loading] mutableLiveData. This method is called inside
+     * the view models that extend [BaseViewModel].
      *
-     * @param isLoading of type [Boolean]
+     * @param isLoading Whether to show or hide the loading view.
      */
     protected fun toggleLoading(isLoading: Boolean) {
         _loading.postValue(isLoading)
     }
 
     /**
-     * [showError] posts the value to [_error] mutableLiveData
-     * The method is called inside the viewModels that extends [BaseViewModel]
+     * Posts the value to [_error] mutableLiveData. This method is called inside
+     * the view models that extend [BaseViewModel].
      *
-     * @param message of type [String?]
+     * @param message The error message to show.
      */
     protected fun showError(message: String?) {
         _error.postValue(message)

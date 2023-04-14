@@ -1,0 +1,4 @@
+# Set of rules to be disabled from ktlint
+[*.{kt,kts}]
+ij_kotlin_allow_trailing_comma_on_call_site = false
+ij_kotlin_allow_trailing_comma = false
