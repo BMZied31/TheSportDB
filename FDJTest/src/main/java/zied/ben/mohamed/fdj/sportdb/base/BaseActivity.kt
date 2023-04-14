@@ -11,62 +11,73 @@ import zied.ben.mohamed.fdj.sportdb.databinding.LayoutLoadingBinding
 import zied.ben.mohamed.fdj.sportdb.utils.toast
 
 /**
- * [BaseActivity] the super class for all activities that interact with viewModel in the app
+ * The base class for all activities in the application.
+ * It provides common functionality such as initializing the view binding, displaying a loading view,
+ * and handling network connectivity.
  *
- * @param VM the viewModel of type [BaseViewModel] associated to the activity
- * @param VB the binding of type [ViewBinding] associated to the activity
+ * @param VM the type of the [BaseViewModel] used in the activity
+ * @param VB the type of the [ViewBinding] used in the activity
  */
 abstract class BaseActivity<out VM : BaseViewModel, VB : ViewBinding> :
     AppCompatActivity() {
 
-    // Generic viewModel
+    /**
+     * The generic view model for the activity.
+     */
     protected abstract val viewModel: VM
 
-    // the root element of the view
+    /**
+     * The root element of the view.
+     */
     private val container: ViewGroup by lazy {
         findViewById(android.R.id.content)
     }
 
-    // Initialize Loading layout
+    /**
+     * The loading view for the activity.
+     */
     private val loading: View by lazy {
         LayoutLoadingBinding
             .inflate(LayoutInflater.from(this), container, false)
             .root
     }
 
-    // Generic binding
+    /**
+     * The generic view binding for the activity.
+     */
     protected lateinit var binding: VB
 
     /**
-     * [getViewBinding] associates the viewBinding [VB] of a specific activity of super type [BaseActivity]
+     * Initializes the view binding for the activity.
      */
     protected abstract fun getViewBinding(): VB
 
+    /**
+     * Called when the activity is created. Initializes the view binding, sets the content view,
+     * observes the loading state and error messages, and handles network connectivity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // initialize viewBinding
         binding = getViewBinding()
 
         setContentView(binding.root)
 
         // TODO check internet availability
 
-        // observe loading state
         viewModel.loading.observe(this) { loading ->
             showLoading(loading)
         }
 
-        // Observe error message
         viewModel.error.observe(this) { error ->
             this.toast(error ?: getString(R.string.generic_error))
         }
     }
 
     /**
-     * [showLoading] Add or remove loading view
+     * Shows or hides the loading view.
      *
-     * @param show of type [Boolean] either show or hide loading
+     * @param show a boolean value indicating whether to show or hide the loading view
      */
     private fun showLoading(show: Boolean) {
         container.removeView(loading)

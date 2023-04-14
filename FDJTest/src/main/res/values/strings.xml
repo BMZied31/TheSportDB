@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">SportDB</string>
 
+    <!-- SearchBar hints -->
+    <string name="search_bar_hint">Search by league</string>
+    <string name="search_view_hint">Type the league name</string>
+
     <!-- Error messages -->
     <string name="generic_error">Something went wrong! Please try again later</string>
 </resources>
