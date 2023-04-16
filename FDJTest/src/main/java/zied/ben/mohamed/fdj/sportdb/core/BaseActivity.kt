@@ -1,4 +1,4 @@
-package zied.ben.mohamed.fdj.sportdb.base
+package zied.ben.mohamed.fdj.sportdb.core
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import zied.ben.mohamed.fdj.sportdb.R
 import zied.ben.mohamed.fdj.sportdb.databinding.LayoutLoadingBinding
-import zied.ben.mohamed.fdj.sportdb.utils.toast
+import zied.ben.mohamed.fdj.sportdb.utils.snackBar
 
 /**
  * The base class for all activities in the application.
@@ -70,7 +70,7 @@ abstract class BaseActivity<out VM : BaseViewModel, VB : ViewBinding> :
         }
 
         viewModel.error.observe(this) { error ->
-            this.toast(error ?: getString(R.string.generic_error))
+            binding.root.snackBar(error ?: getString(R.string.generic_error))
         }
     }
 
