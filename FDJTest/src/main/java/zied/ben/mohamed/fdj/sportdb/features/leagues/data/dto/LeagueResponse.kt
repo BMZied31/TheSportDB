@@ -1,7 +1,7 @@
 package zied.ben.mohamed.fdj.sportdb.features.leagues.data.dto
 
-import zied.ben.mohamed.fdj.sportdb.core.Mapper
-import zied.ben.mohamed.fdj.sportdb.features.leagues.domain.model.LeagueModel
+import zied.ben.mohamed.fdj.sportdb.core.DatabaseEntityMapper
+import zied.ben.mohamed.fdj.sportdb.features.leagues.data.entity.LeagueEntity
 
 /**
  * A data class representing a response from API that contains a list of [LeagueResponse] objects.
@@ -25,17 +25,17 @@ data class LeagueResponse(
     val strLeague: String?,
     val strSport: String?,
     val strLeagueAlternate: String?
-) : Mapper<LeagueModel> {
+) : DatabaseEntityMapper<LeagueEntity> {
 
     /**
-     * Maps this [LeagueResponse] object to a [LeagueModel] domain model.
+     * Maps this [LeagueResponse] object to a [LeagueEntity] db entity.
      *
-     * @return The domain model.
+     * @return The db entity.
      */
-    override fun mapToDomainModel(): LeagueModel =
-        LeagueModel(
-            idLeague = idLeague,
-            name = strLeague ?: "",
+    override fun mapToDbEntity(): LeagueEntity =
+        LeagueEntity(
+            id = idLeague ?: "",
+            leagueName = strLeague ?: "",
             sport = strSport ?: ""
         )
 }
