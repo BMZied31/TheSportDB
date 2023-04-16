@@ -5,7 +5,7 @@ package zied.ben.mohamed.fdj.sportdb.core
  *
  * @param T The type of the domain model.
  */
-interface Mapper<T : Any> {
+interface DomainModelMapper<T : Any> {
     /**
      * Maps an object to a domain model of type [T].
      *
