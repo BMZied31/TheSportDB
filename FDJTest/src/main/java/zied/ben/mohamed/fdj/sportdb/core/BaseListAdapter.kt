@@ -1,4 +1,4 @@
-package zied.ben.mohamed.fdj.sportdb.utils
+package zied.ben.mohamed.fdj.sportdb.core
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

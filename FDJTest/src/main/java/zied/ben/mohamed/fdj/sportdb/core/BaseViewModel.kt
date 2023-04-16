@@ -1,4 +1,4 @@
-package zied.ben.mohamed.fdj.sportdb.base
+package zied.ben.mohamed.fdj.sportdb.core
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,7 +22,7 @@ abstract class BaseViewModel : ViewModel() {
      * Initializes every view model with loading turned off.
      */
     init {
-        toggleLoading(isLoading = false)
+        // toggleLoading(isLoading = false)
     }
 
     /**
