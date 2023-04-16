@@ -8,7 +8,7 @@ package zied.ben.mohamed.fdj.sportdb.features.leagues.domain.model
  * @property sport The sport of the league.
  */
 data class LeagueModel(
-    val idLeague: String?,
+    val idLeague: String,
     val name: String,
     val sport: String
 ) {
@@ -17,5 +17,5 @@ data class LeagueModel(
      * Creates a new instance of the `LeagueModel` class with null values for `idLeague`,
      * and empty strings for `name` and `sport`.
      */
-    constructor() : this(idLeague = null, name = "", sport = "")
+    constructor() : this(idLeague = "", name = "", sport = "")
 }

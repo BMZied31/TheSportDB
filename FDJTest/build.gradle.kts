@@ -84,6 +84,18 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.7.2")
     implementation("com.squareup.okhttp3:logging-interceptor:4.7.2")
 
+    // room
+    val room_version = "2.5.1"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$room_version")
+
+    testImplementation("androidx.room:room-testing:$room_version")
+
+    // sl4j : to avoid warning in tests logs
     testImplementation("org.slf4j:slf4j-simple:2.0.5")
 
     // Mockk
