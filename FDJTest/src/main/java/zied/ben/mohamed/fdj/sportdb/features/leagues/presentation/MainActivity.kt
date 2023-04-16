@@ -5,9 +5,11 @@ import androidx.activity.viewModels
 import androidx.core.widget.doOnTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import zied.ben.mohamed.fdj.sportdb.base.BaseActivity
+import zied.ben.mohamed.fdj.sportdb.core.BaseActivity
 import zied.ben.mohamed.fdj.sportdb.databinding.ActivityMainBinding
+import zied.ben.mohamed.fdj.sportdb.features.leagues.domain.model.LeagueModel
 import zied.ben.mohamed.fdj.sportdb.features.leagues.presentation.adapters.LeaguesAdapter
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
@@ -16,23 +18,37 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override val viewModel: MainViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val mockList = listOf("ligue1", "ligue2", "liga", "seriaA")
-
-        val adapter = LeaguesAdapter { leagueName ->
+    private val leaguesAdapter: LeaguesAdapter by lazy {
+        LeaguesAdapter { leagueName ->
             binding.searchView.hide()
             binding.tvLeague.text = leagueName
         }
+    }
 
-        binding.recyclerLeagues.adapter = adapter
+    private var leaguesList = listOf<LeagueModel>()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initObservers()
+        viewModel.getAllLeagues()
+
+        binding.recyclerLeagues.adapter = leaguesAdapter
         binding.searchView.editText.doOnTextChanged { text, _, _, _ ->
             Timber.d("user's input: $text")
-            adapter.submitList(
-                text?.let { mockList.filter { name -> name.contains(text) } }
-                    ?: mockList
+            leaguesAdapter.submitList(
+                text?.let {
+                    leaguesList.filter { league ->
+                        league.name.lowercase(Locale.FRANCE)
+                            .contains(text.toString().lowercase(Locale.FRANCE))
+                    }
+                }
+                    ?: leaguesList
             )
+        }
+    }
+
+    private fun initObservers() {
+        viewModel.leagues.observe(this) {
+            leaguesList = it
         }
     }
 }
