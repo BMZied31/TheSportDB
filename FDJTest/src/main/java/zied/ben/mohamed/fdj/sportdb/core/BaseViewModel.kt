@@ -19,13 +19,6 @@ abstract class BaseViewModel : ViewModel() {
     val error: LiveData<String> = _error
 
     /**
-     * Initializes every view model with loading turned off.
-     */
-    init {
-        // toggleLoading(isLoading = false)
-    }
-
-    /**
      * Posts the value to [_loading] mutableLiveData. This method is called inside
      * the view models that extend [BaseViewModel].
      *

@@ -6,6 +6,7 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
 }
+
 val ktlint by configurations.creating
 project.tasks.preBuild.dependsOn("ktlintFormat")
 
@@ -55,8 +56,6 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-
-    //
     implementation("androidx.activity:activity-ktx:1.7.0")
 
     // Ktlint
@@ -84,15 +83,18 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.7.2")
     implementation("com.squareup.okhttp3:logging-interceptor:4.7.2")
 
+    // security
+    implementation("androidx.security:security-crypto:1.1.0-alpha05")
+
     // room
     val room_version = "2.5.1"
-
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
 
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$room_version")
 
+    // room tests
     testImplementation("androidx.room:room-testing:$room_version")
 
     // sl4j : to avoid warning in tests logs
@@ -101,6 +103,10 @@ dependencies {
     // Mockk
     testImplementation("io.mockk:mockk:1.13.4")
 
+    // coroutines mocks
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+
+    // test rules
     testImplementation("androidx.arch.core:core-testing:2.2.0")
 
     testImplementation("junit:junit:4.13.2")
