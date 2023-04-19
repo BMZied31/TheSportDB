@@ -5,8 +5,9 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
-import org.junit.After
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -19,6 +20,7 @@ import zied.ben.mohamed.fdj.sportdb.features.leagues.presentation.MainViewModel
 /**
  * Unit tests for the [MainViewModel] class.
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 class MainViewModelTest {
 
     // Rule that swaps the background executor used by the Architecture Components with
@@ -29,9 +31,12 @@ class MainViewModelTest {
     // Mock instance of the [GetLeaguesUseCase] class.
     private val getLeaguesUseCaseMock: GetLeaguesUseCase = mockk()
 
+    // Test dispatcher to replace [Dispatchers.IO]
+    private val testDispatcher = UnconfinedTestDispatcher()
+
     // Instance of the [MainViewModel] class under test.
     private val mainViewModel: MainViewModel =
-        MainViewModel(getLeaguesUseCase = getLeaguesUseCaseMock)
+        MainViewModel(getLeaguesUseCase = getLeaguesUseCaseMock, testDispatcher)
 
     /**
      * Set up method that initializes the mock objects.
@@ -64,6 +69,9 @@ class MainViewModelTest {
         mainViewModel.error.observeForever { error ->
             Assert.assertEquals(errorMessage, error)
         }
+
+        // Remove observer
+        mainViewModel.error.removeObserver { }
     }
 
     /**
@@ -89,14 +97,8 @@ class MainViewModelTest {
         mainViewModel.leagues.observeForever { list ->
             Assert.assertEquals(leaguesList, list)
         }
-    }
 
-    /**
-     * Tear down method that removes the observers from the LiveData objects.
-     */
-    @After
-    fun after() {
-        mainViewModel.error.removeObserver { }
+        // Remove observe
         mainViewModel.leagues.removeObserver { }
     }
 }
