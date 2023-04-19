@@ -4,8 +4,10 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -17,14 +19,18 @@ import zied.ben.mohamed.fdj.sportdb.features.leagues.domain.usecase.GetLeaguesUs
 /**
  * Unit tests for the [GetLeaguesUseCase] use case.
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 class GetLeaguesUseCaseTest {
 
     // Mock instance of the [LeagueRepository] class.
     private val leagueRepository: LeagueRepository = mockk()
 
+    // Test dispatcher to replace [Dispatchers.IO]
+    private val testDispatcher = UnconfinedTestDispatcher()
+
     // Instance of the [GetLeaguesUseCase] class under test.
     private val getLeaguesUseCase: GetLeaguesUseCase =
-        GetLeaguesUseCase(leagueRepository = leagueRepository)
+        GetLeaguesUseCase(leagueRepository = leagueRepository, testDispatcher)
 
     /**
      * Set up method that initializes the mock objects.

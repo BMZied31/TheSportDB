@@ -1,29 +1,41 @@
-package zied.ben.mohamed.fdj.sportdb.features.leagues.data
+package zied.ben.mohamed.fdj.sportdb.features.leagues.data.repository
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 import zied.ben.mohamed.fdj.sportdb.core.FDJResult
+import zied.ben.mohamed.fdj.sportdb.di.IoDispatcher
+import zied.ben.mohamed.fdj.sportdb.features.leagues.data.datahelpers.DataSourceDecisionMaker
 import zied.ben.mohamed.fdj.sportdb.features.leagues.data.datasource.local.LeagueLocalDataSource
 import zied.ben.mohamed.fdj.sportdb.features.leagues.data.datasource.remote.LeagueRemoteDataSource
 import zied.ben.mohamed.fdj.sportdb.features.leagues.domain.model.LeagueModel
 import zied.ben.mohamed.fdj.sportdb.features.leagues.domain.respository.LeagueRepository
-import zied.ben.mohamed.fdj.sportdb.utils.CheckConnection
 import javax.inject.Inject
 
 class LeagueRepositoryImpl @Inject constructor(
     private val leagueRemoteDataSource: LeagueRemoteDataSource,
     private val leagueLocalDataSource: LeagueLocalDataSource,
-    private val checkConnection: CheckConnection
+    private val dataSourceDecisionMaker: DataSourceDecisionMaker,
+    @IoDispatcher private val dispatcherIO: CoroutineDispatcher
 ) : LeagueRepository {
 
     override suspend fun getLeagues(): Flow<FDJResult<List<LeagueModel>>> =
-        try {
-            if (checkConnection.isConnected()) {
-                val remoteRawData = leagueRemoteDataSource.getLeagues().leagues
-                val leaguesEntity = remoteRawData?.mapNotNull { leagueResponse ->
-                    leagueResponse?.mapToDbEntity()
+        withContext(dispatcherIO) {
+            if (dataSourceDecisionMaker.shouldFetchFromRemote()) {
+                try {
+                    val remoteRawData = leagueRemoteDataSource.getLeagues().leagues
+                    val leaguesEntity = remoteRawData?.mapNotNull { leagueResponse ->
+                        leagueResponse?.mapToDbEntity()
+                    }
+                    leaguesEntity?.let { list ->
+                        leagueLocalDataSource.deleteAll()
+                        leagueLocalDataSource.insertAllLeagues(list = list)
+                    }
+                } catch (e: Exception) {
+                    Timber.e("error $e")
                 }
-                leaguesEntity?.let { list -> leagueLocalDataSource.insertAllLeagues(list = list) }
             }
 
             flow {
@@ -34,10 +46,6 @@ class LeagueRepositoryImpl @Inject constructor(
                         } ?: listOf()
                     )
                 )
-            }
-        } catch (e: Exception) {
-            flow {
-                emit(FDJResult.Failure(e))
             }
         }
 }

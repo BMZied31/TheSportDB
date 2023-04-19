@@ -7,4 +7,6 @@ interface LeagueLocalDataSource {
     suspend fun getAllLeagues(): List<LeagueEntity>?
 
     suspend fun insertAllLeagues(list: List<LeagueEntity>)
+
+    suspend fun deleteAll()
 }

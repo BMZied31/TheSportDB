@@ -63,8 +63,6 @@ abstract class BaseActivity<out VM : BaseViewModel, VB : ViewBinding> :
 
         setContentView(binding.root)
 
-        // TODO check internet availability
-
         viewModel.loading.observe(this) { loading ->
             showLoading(loading)
         }

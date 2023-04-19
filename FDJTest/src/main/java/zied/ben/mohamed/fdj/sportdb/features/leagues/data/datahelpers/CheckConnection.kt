@@ -1,4 +1,4 @@
-package zied.ben.mohamed.fdj.sportdb.utils
+package zied.ben.mohamed.fdj.sportdb.features.leagues.data.datahelpers
 
 import android.content.Context
 import android.net.ConnectivityManager
