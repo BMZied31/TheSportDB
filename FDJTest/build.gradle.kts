@@ -86,6 +86,9 @@ dependencies {
     // security
     implementation("androidx.security:security-crypto:1.1.0-alpha05")
 
+    // Coil
+    implementation("io.coil-kt:coil:2.3.0")
+
     // room
     val room_version = "2.5.1"
     implementation("androidx.room:room-runtime:$room_version")

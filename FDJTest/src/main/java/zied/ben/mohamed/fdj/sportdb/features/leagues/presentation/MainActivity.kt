@@ -9,6 +9,7 @@ import zied.ben.mohamed.fdj.sportdb.core.BaseActivity
 import zied.ben.mohamed.fdj.sportdb.databinding.ActivityMainBinding
 import zied.ben.mohamed.fdj.sportdb.features.leagues.domain.model.LeagueModel
 import zied.ben.mohamed.fdj.sportdb.features.leagues.presentation.adapters.LeaguesAdapter
+import zied.ben.mohamed.fdj.sportdb.features.leagues.presentation.adapters.TeamsAdapter
 import java.util.*
 
 @AndroidEntryPoint
@@ -21,8 +22,12 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private val leaguesAdapter: LeaguesAdapter by lazy {
         LeaguesAdapter { leagueName ->
             binding.searchView.hide()
-            binding.tvLeague.text = leagueName
+            viewModel.getTeamsByLeague(leagueName)
         }
+    }
+
+    private val teamsAdapter: TeamsAdapter by lazy {
+        TeamsAdapter()
     }
 
     private var leaguesList = listOf<LeagueModel>()
@@ -32,6 +37,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         viewModel.getAllLeagues()
 
         binding.recyclerLeagues.adapter = leaguesAdapter
+        binding.recyclerTeams.adapter = teamsAdapter
         binding.searchView.editText.doOnTextChanged { text, _, _, _ ->
             Timber.d("user's input: $text")
             leaguesAdapter.submitList(
@@ -49,6 +55,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private fun initObservers() {
         viewModel.leagues.observe(this) {
             leaguesList = it
+        }
+
+        viewModel.teams.observe(this) {
+            teamsAdapter.submitList(it)
         }
     }
 }

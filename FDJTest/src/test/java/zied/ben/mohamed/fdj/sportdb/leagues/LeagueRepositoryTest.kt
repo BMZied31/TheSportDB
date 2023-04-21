@@ -4,9 +4,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -24,21 +22,18 @@ import zied.ben.mohamed.fdj.sportdb.features.leagues.domain.respository.LeagueRe
 /**
  * Test class for [LeagueRepository]
  */
-@OptIn(ExperimentalCoroutinesApi::class)
 class LeagueRepositoryTest {
 
     // Mocks of the dependencies needed for testing the repository
     private val leagueRemoteDataSource: LeagueRemoteDataSource = mockk()
     private val leagueLocalDataSource: LeagueLocalDataSource = mockk()
     private val dataSourceDecisionMaker: DataSourceDecisionMaker = mockk()
-    private val testDispatcher = UnconfinedTestDispatcher()
 
     // Instance of the repository to be tested
     private val leagueRepositoryImpl: LeagueRepository = LeagueRepositoryImpl(
         leagueRemoteDataSource = leagueRemoteDataSource,
         leagueLocalDataSource = leagueLocalDataSource,
-        dataSourceDecisionMaker = dataSourceDecisionMaker,
-        dispatcherIO = testDispatcher
+        dataSourceDecisionMaker = dataSourceDecisionMaker
     )
 
     @Before

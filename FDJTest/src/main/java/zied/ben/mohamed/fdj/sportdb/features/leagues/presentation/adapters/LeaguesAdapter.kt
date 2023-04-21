@@ -7,6 +7,11 @@ import zied.ben.mohamed.fdj.sportdb.core.BaseListAdapter
 import zied.ben.mohamed.fdj.sportdb.databinding.ItemLeagueBinding
 import zied.ben.mohamed.fdj.sportdb.features.leagues.domain.model.LeagueModel
 
+/**
+ * [LeaguesAdapter] Is An adapter for displaying a list of [LeagueModel] items in a RecyclerView.
+ *
+ * @param onClick lambda callback to handle clicks on items
+ */
 class LeaguesAdapter(
     private val onClick: (String) -> Unit
 ) : BaseListAdapter<LeagueModel>(
