@@ -34,7 +34,7 @@ data class LeagueResponse(
      */
     override fun mapToDbEntity(): LeagueEntity =
         LeagueEntity(
-            id = idLeague ?: "",
+            idLeague = idLeague ?: "",
             leagueName = strLeague ?: "",
             sport = strSport ?: ""
         )

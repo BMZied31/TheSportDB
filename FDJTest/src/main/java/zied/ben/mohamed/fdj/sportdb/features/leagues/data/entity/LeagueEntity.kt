@@ -7,7 +7,7 @@ import zied.ben.mohamed.fdj.sportdb.features.leagues.domain.model.LeagueModel
 
 @Entity
 data class LeagueEntity(
-    @PrimaryKey val id: String,
+    @PrimaryKey val idLeague: String,
     val leagueName: String?,
     val sport: String?
 ) : DomainModelMapper<LeagueModel> {
@@ -19,7 +19,7 @@ data class LeagueEntity(
      */
     override fun mapToDomainModel(): LeagueModel =
         LeagueModel(
-            idLeague = id,
+            idLeague = idLeague,
             name = leagueName ?: "",
             sport = sport ?: ""
         )

@@ -7,4 +7,9 @@
 
     <!-- Error messages -->
     <string name="generic_error">Something went wrong! Please try again later</string>
+    <string name="error_league_name">Sorry we can\'t load this league</string>
+
+    <!-- Image Content descriptors -->
+    <string name="cd_team_badge">Team\'s Badge</string>
+
 </resources>

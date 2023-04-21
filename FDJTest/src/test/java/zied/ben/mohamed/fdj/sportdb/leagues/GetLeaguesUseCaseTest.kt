@@ -25,12 +25,15 @@ class GetLeaguesUseCaseTest {
     // Mock instance of the [LeagueRepository] class.
     private val leagueRepository: LeagueRepository = mockk()
 
-    // Test dispatcher to replace [Dispatchers.IO]
+    // Test dispatcher to replace [Dispatchers.Default]
     private val testDispatcher = UnconfinedTestDispatcher()
 
     // Instance of the [GetLeaguesUseCase] class under test.
     private val getLeaguesUseCase: GetLeaguesUseCase =
-        GetLeaguesUseCase(leagueRepository = leagueRepository, testDispatcher)
+        GetLeaguesUseCase(
+            leagueRepository = leagueRepository,
+            defaultDispatcher = testDispatcher
+        )
 
     /**
      * Set up method that initializes the mock objects.
