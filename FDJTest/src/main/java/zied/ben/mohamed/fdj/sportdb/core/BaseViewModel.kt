@@ -30,7 +30,7 @@ abstract class BaseViewModel : ViewModel() {
 
     /**
      * Posts the value to [_error] mutableLiveData. This method is called inside
-     * the view models that extend [BaseViewModel].
+     * the viewmodels that extend [BaseViewModel].
      *
      * @param message The error message to show.
      */
