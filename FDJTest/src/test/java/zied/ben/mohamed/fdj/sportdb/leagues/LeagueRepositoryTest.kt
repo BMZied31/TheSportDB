@@ -65,7 +65,7 @@ class LeagueRepositoryTest {
     @Test
     fun `given shouldFetchFromRemote is true and remote throws exception, when get leagues, then local db will not be updated`() {
         // Mocking the behavior of the dependencies
-        coEvery { dataSourceDecisionMaker.shouldFetchFromRemote() } returns true
+        coEvery { dataSourceDecisionMaker.shouldFetchLeaguesFromRemote() } returns true
         coEvery { leagueRemoteDataSource.getLeagues() } throws serverException
 
         // Calling the function to be tested
@@ -88,7 +88,7 @@ class LeagueRepositoryTest {
     @Test
     fun `given shouldFetchFromRemote is true and remote throws exception, when get leagues, then get data from local db`() {
         // Mocking the behavior of the dependencies
-        coEvery { dataSourceDecisionMaker.shouldFetchFromRemote() } returns true
+        coEvery { dataSourceDecisionMaker.shouldFetchLeaguesFromRemote() } returns true
         coEvery { leagueRemoteDataSource.getLeagues() } throws serverException
         coEvery { leagueLocalDataSource.getAllLeagues() } returns localDbList
 
@@ -111,7 +111,7 @@ class LeagueRepositoryTest {
     @Test
     fun `given shouldFetchFromRemote is true and remote return null, when get leagues, then local db will not be updated`() {
         // Mocking the behavior of the dependencies
-        coEvery { dataSourceDecisionMaker.shouldFetchFromRemote() } returns true
+        coEvery { dataSourceDecisionMaker.shouldFetchLeaguesFromRemote() } returns true
         coEvery { leagueRemoteDataSource.getLeagues() } returns remoteNullResponse
 
         // Calling the function to be tested
@@ -131,7 +131,7 @@ class LeagueRepositoryTest {
     @Test
     fun `given shouldFetchFromRemote is true, when get leagues, then local db will be updated`() {
         // Mocking the behavior of the dependencies
-        coEvery { dataSourceDecisionMaker.shouldFetchFromRemote() } returns true
+        coEvery { dataSourceDecisionMaker.shouldFetchLeaguesFromRemote() } returns true
         coEvery { leagueRemoteDataSource.getLeagues() } returns remoteResponseWithData
         coEvery { leagueLocalDataSource.deleteAll() } returns Unit
         coEvery { leagueLocalDataSource.insertAllLeagues(any()) } returns Unit
@@ -156,7 +156,7 @@ class LeagueRepositoryTest {
     @Test
     fun `given shouldFetchFromRemote is false, when get leagues, then get data from local db without calling remote`() {
         // Mocking the behavior of the dependencies
-        coEvery { dataSourceDecisionMaker.shouldFetchFromRemote() } returns false
+        coEvery { dataSourceDecisionMaker.shouldFetchLeaguesFromRemote() } returns false
         coEvery { leagueLocalDataSource.getAllLeagues() } returns localDbList
 
         var actualResult: List<LeagueModel>? = null

@@ -12,7 +12,7 @@ import zied.ben.mohamed.fdj.sportdb.features.leagues.domain.respository.LeagueRe
 import javax.inject.Inject
 
 /**
- * Implementation of [LeagueRepository] which handles fetching data from local and remote data sources.
+ * Implementation of [LeagueRepository] which handles fetching league data from local and remote data sources.
  *
  * @property leagueRemoteDataSource the remote data source to fetch data from
  * @property leagueLocalDataSource the local data source to fetch data from
@@ -32,7 +32,7 @@ class LeagueRepositoryImpl @Inject constructor(
      */
     override suspend fun getLeagues(): Flow<FDJResult<List<LeagueModel>>> {
         // check if data should be fetched from remote data source
-        if (dataSourceDecisionMaker.shouldFetchFromRemote()) {
+        if (dataSourceDecisionMaker.shouldFetchLeaguesFromRemote()) {
             try {
                 // fetch data from remote data source
                 val remoteRawData = leagueRemoteDataSource.getLeagues().leagues
@@ -54,9 +54,9 @@ class LeagueRepositoryImpl @Inject constructor(
         return flow {
             emit(
                 FDJResult.Success(
-                    leagueLocalDataSource.getAllLeagues()?.map { leagueEntity ->
+                    leagueLocalDataSource.getAllLeagues().map { leagueEntity ->
                         leagueEntity.mapToDomainModel()
-                    } ?: listOf()
+                    }
                 )
             )
         }
