@@ -2,7 +2,6 @@ package zied.ben.mohamed.fdj.sportdb.features.leagues.data.dto
 
 import zied.ben.mohamed.fdj.sportdb.core.DatabaseEntityMapper
 import zied.ben.mohamed.fdj.sportdb.features.leagues.data.entity.TeamEntity
-import zied.ben.mohamed.fdj.sportdb.features.leagues.domain.model.TeamModel
 
 /**
  * A data class representing a response from API that contains a list of [TeamResponse] objects.
@@ -82,32 +81,25 @@ data class TeamResponse(
     val strCountry: String?,
     val strTeamBadge: String?,
     val strTeamJersey: String?
-) : DatabaseEntityMapper<TeamModel> {
+) : DatabaseEntityMapper<TeamEntity> {
 
     /**
      * Maps this [TeamResponse] object to a [TeamEntity] db entity.
      *
      * @return The db entity.
      */
-    override fun mapToDbEntity(): TeamModel =
-        TeamModel(
-            id = this.idTeam ?: "",
-            teamName = this.strTeam ?: "",
-            teamAlternateName = this.strAlternate ?: "",
-            leagueName1 = this.strLeague ?: "",
-            idLeague1 = this.idLeague ?: "",
+    override fun mapToDbEntity(): TeamEntity {
+        return TeamEntity(
+            teamId = idTeam ?: "",
+            teamName = strTeam ?: "",
+            teamBadge = strTeamBadge,
+            leagueName = this.strLeague,
             leagueName2 = this.strLeague2,
-            idLeague2 = this.idLeague2,
             leagueName3 = this.strLeague3,
-            idLeague3 = this.idLeague3,
             leagueName4 = this.strLeague4,
-            idLeague4 = this.idLeague4,
             leagueName5 = this.strLeague5,
-            idLeague5 = this.idLeague5,
             leagueName6 = this.strLeague6,
-            idLeague6 = this.idLeague6,
-            leagueName7 = this.strLeague7,
-            idLeague7 = this.idLeague7,
-            teamBadge = this.strTeamBadge
+            leagueName7 = this.strLeague7
         )
+    }
 }

@@ -14,17 +14,30 @@ import zied.ben.mohamed.fdj.sportdb.features.leagues.data.database.LeagueDao
 import zied.ben.mohamed.fdj.sportdb.features.leagues.data.database.LeagueDatabase
 import javax.inject.Singleton
 
+/**
+ * Hilt module that provides dependencies related to data storage.
+ */
 @InstallIn(SingletonComponent::class)
 @Module
 object StorageModule {
 
     private const val preferencesName = "FDJTest_shared_preferences"
 
+    /**
+     * Provides the DAO for league data.
+     * @param dataBase The league database to get the DAO from.
+     * @return The DAO for league data.
+     */
     @Singleton
     @Provides
     fun providesLeagueDao(dataBase: LeagueDatabase): LeagueDao =
         dataBase.leagueDao()
 
+    /**
+     * Provides the league database.
+     * @param context The application context.
+     * @return The league database.
+     */
     @Singleton
     @Provides
     fun provideLeagueDb(@ApplicationContext context: Context): LeagueDatabase =
@@ -34,6 +47,11 @@ object StorageModule {
             "league-db"
         ).build()
 
+    /**
+     * Provides the encrypted shared preferences for the application.
+     * @param context The application context.
+     * @return The encrypted shared preferences.
+     */
     @Singleton
     @Provides
     fun provideEncryptedSharedPref(@ApplicationContext context: Context): SharedPreferences {
