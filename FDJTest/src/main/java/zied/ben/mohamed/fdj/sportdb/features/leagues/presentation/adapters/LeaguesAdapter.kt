@@ -19,6 +19,9 @@ class LeaguesAdapter(
     contentsSame = { old, new -> old == new }
 ) {
 
+    /**
+     * Binds a single item in the list to a [LeaguesViewHolder], updating the view with the item's data.
+     */
     override fun onCreateViewHolder(
         parent: ViewGroup,
         inflater: LayoutInflater,
@@ -28,10 +31,16 @@ class LeaguesAdapter(
         return LeaguesViewHolder(binding, onClick)
     }
 
+    /**
+     * Binds a single item in the list to a TeamsViewHolder, updating the view with the item's data.
+     */
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as LeaguesViewHolder).bind(getItem(position))
     }
 
+    /**
+     * A ViewHolder for holding the views of a single item in the list.
+     */
     private class LeaguesViewHolder(
         private val itemBinding: ItemLeagueBinding,
         private val onClick: (String) -> Unit

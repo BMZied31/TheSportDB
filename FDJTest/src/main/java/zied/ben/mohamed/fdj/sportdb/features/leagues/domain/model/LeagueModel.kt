@@ -14,8 +14,7 @@ data class LeagueModel(
 ) {
 
     /**
-     * Creates a new instance of the `LeagueModel` class with null values for `idLeague`,
-     * and empty strings for `name` and `sport`.
+     * Creates a new instance of the [LeagueModel] class with empty strings for all parameters.
      */
     constructor() : this(idLeague = "", name = "", sport = "")
 }

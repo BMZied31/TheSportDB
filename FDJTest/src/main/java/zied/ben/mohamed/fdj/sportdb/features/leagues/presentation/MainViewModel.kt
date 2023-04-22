@@ -59,6 +59,7 @@ class MainViewModel @Inject constructor(
     /**
      * This function invokes the corresponding use case to get the list of teams for the given league name,
      * and updates the LiveData object [_teams] accordingly.
+     *
      * @param leagueName the name of the league for which to get the list of teams.
      */
     fun getTeamsByLeague(leagueName: String) {
