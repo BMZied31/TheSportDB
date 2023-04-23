@@ -31,7 +31,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl("https://www.thesportsdb.com/api/v1/json/3/")
+            .baseUrl("${BuildConfig.BASE_URL}${BuildConfig.APIKEY}/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
