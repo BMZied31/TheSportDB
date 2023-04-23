@@ -24,6 +24,21 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    val dimension = "dimension"
+    flavorDimensions.add(dimension)
+    productFlavors {
+        create("dev") {
+            this.dimension = dimension
+            buildConfigField("String", "BASE_URL", properties["baseUrl"] as String)
+            buildConfigField("String", "APIKEY", properties["devApiKey"] as String)
+        }
+        create("prod") {
+            this.dimension = dimension
+            buildConfigField("String", "BASE_URL", properties["baseUrl"] as String)
+            buildConfigField("String", "APIKEY", properties["prodApiKey"] as String)
+        }
+    }
+
     buildTypes {
         debug {
             isMinifyEnabled = false
