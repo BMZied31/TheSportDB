@@ -1,4 +1,4 @@
-package zied.ben.mohamed.fdj.sportdb.leagues
+package zied.ben.mohamed.fdj.sportdb.leagues.domain
 
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
