@@ -1,4 +1,4 @@
-package zied.ben.mohamed.fdj.sportdb.leagues
+package zied.ben.mohamed.fdj.sportdb.leagues.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.mockk.MockKAnnotations
