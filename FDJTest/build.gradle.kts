@@ -8,7 +8,7 @@ plugins {
 }
 
 val ktlint by configurations.creating
-project.tasks.preBuild.dependsOn("ktlintFormat")
+project.tasks.preBuild.dependsOn("ktlintCheck")
 
 android {
     namespace = "zied.ben.mohamed.fdj.sportdb"
@@ -22,6 +22,21 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    val dimension = "dimension"
+    flavorDimensions.add(dimension)
+    productFlavors {
+        create("dev") {
+            this.dimension = dimension
+            buildConfigField("String", "BASE_URL", properties["baseUrl"] as String)
+            buildConfigField("String", "APIKEY", properties["devApiKey"] as String)
+        }
+        create("prod") {
+            this.dimension = dimension
+            buildConfigField("String", "BASE_URL", properties["baseUrl"] as String)
+            buildConfigField("String", "APIKEY", properties["prodApiKey"] as String)
+        }
     }
 
     buildTypes {
