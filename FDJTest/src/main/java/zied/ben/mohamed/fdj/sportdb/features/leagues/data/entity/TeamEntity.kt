@@ -25,12 +25,12 @@ data class TeamEntity(
     val teamName: String = "",
     val teamBadge: String? = null,
     val leagueName: String?,
-    val leagueName2: String?,
-    val leagueName3: String?,
-    val leagueName4: String?,
-    val leagueName5: String?,
-    val leagueName6: String?,
-    val leagueName7: String?
+    val leagueName2: String? = null,
+    val leagueName3: String? = null,
+    val leagueName4: String? = null,
+    val leagueName5: String? = null,
+    val leagueName6: String? = null,
+    val leagueName7: String? = null
 ) : DomainModelMapper<TeamModel> {
 
     /**

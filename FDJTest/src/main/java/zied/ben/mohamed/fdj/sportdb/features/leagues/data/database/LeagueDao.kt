@@ -49,6 +49,6 @@ interface LeagueDao {
      * @param nameOfLeague The name of the league.
      * @return A list of [TeamEntity] objects that belong to the league.
      */
-    @Query("SELECT * FROM team WHERE (:nameOfLeague IN (leagueName, leagueName2, leagueName3, leagueName4, leagueName5, leagueName6, leagueName7))")
+    @Query("SELECT * FROM team WHERE (:nameOfLeague IN (leagueName, leagueName2, leagueName3, leagueName4, leagueName5, leagueName6, leagueName7)) ORDER BY teamName ASC")
     fun getTeamsByLeague(nameOfLeague: String): List<TeamEntity>
 }
